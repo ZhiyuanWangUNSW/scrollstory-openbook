@@ -53,7 +53,7 @@ const PAGES = [
   // 1) What is this
   {
     kind: "text",
-    tts: "What is this. This map shows where the emergency stairwells are located. It helps you understand how to leave our office area safely.",
+    tts: "What is this. This map shows where the emergency stairwells are located. It helps you understand how to leave our office area safely. If you would like extra support during an evacuation, please talk to your manager about setting up a buddy plan.",
     render: () => `
       <div class="page">
         <img class="page-bg" src="assets/text-bg.png" alt="Text background" />
@@ -76,6 +76,9 @@ const PAGES = [
               are located.
             </li>
             <li>It helps you understand how to leave our office area safely.</li>
+            <li>
+            If you would like extra support during an evacuation, please talk to your manager about setting up a buddy plan.
+            </li>
           </ul>
         </div>
       </div>

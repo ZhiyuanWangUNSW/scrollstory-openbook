@@ -180,109 +180,138 @@ const PAGES = [
     bg: PALETTE.teal,
     title: "What is this",
     points: [
-      {
-        img: "assets/page2-1.png",
-        alt: "Emergency stairwells overview",
-        html: `
-          <p><strong>This plan shows where the emergency stairwells are located.</strong></p>
-          <p>
-            <span class="tooltip">
-              Emergency stairwells
-              <span class="tooltip-box">
-                Emergency stairwells are protected stairs used to leave the building safely during an emergency.
-              </span>
-            </span>
-            help people leave the building safely during an emergency.
-          </p>
-        `,
-        tts: "This map shows where the emergency stairwells are located. Emergency stairwells are protected stairs used to leave the building safely during an emergency."
-      },
-      {
-        img: "assets/page2-2.png",
-        alt: "Leaving our office area",
-        html: `
-          <p><strong>It helps you understand how to leave our office area safely.</strong></p>
-          <p>In a real emergency, follow the EXIT signs and instructions from fire wardens.</p>
-        `,
-        tts: "It helps you understand how to leave our office area safely. In a real emergency, follow the exit signs and instructions from fire wardens."
-      },
-      {
-        img: "assets/page2-3.png",
-        alt: "Buddy plan",
-        html: `
-          <p><strong>If you would like extra support during an evacuation, please talk to your manager.</strong></p>
-          <p>Your manager can help you set up a personal evacuation plan.</p>
-        `,
-        tts: "If you would like extra support during an evacuation, please talk to your manager. Your manager can help you set up a personal evacuation plan."
-      }
+       {
+    img: "assets/page2-1.png",
+    alt: "Emergency exit plan overview",
+    html: `
+      <p><strong>About this plan</strong></p>
+      <p>This plan shows where the <strong>emergency stairwells</strong> are located.</p>
+      <p>Emergency stairwells help people leave the building safely during an emergency.</p>
+    `,
+    tts: "About this plan. This plan shows where the emergency stairwells are located. Emergency stairwells help people leave the building safely during an emergency."
+  },
+
+  {
+    img: "assets/page2-2.png",
+    alt: "Follow exit signs",
+    html: `
+      <p><strong>Follow exit signs</strong></p>
+      <p>In an emergency:</p>
+      <p> Follow the <strong>EXIT signs</strong> and use the nearest stairwell</p>
+      
+    `,
+    tts: "Follow exit signs. In an emergency, follow the exit signs and use the nearest stairwell."
+  },
+
+  {
+    img: "assets/page2-3.png",
+    alt: "Fire warden",
+    html: `
+      <p><strong>Fire wardens</strong></p>
+      <p>Listen to instructions from the <strong>fire warden</strong>.</p>
+      <p>A fire warden is the person who helps everyone evacuate safely.</p>
+    `,
+    tts: "Fire wardens. Listen to instructions from the fire warden. A fire warden is the person who helps everyone evacuate safely."
+  },
+
+  {
+    img: "assets/page2-4.png",
+    alt: "Extra support",
+    html: `
+      <p><strong>Extra support</strong></p>
+      <p>If you would like extra support during an evacuation, please talk to your manager.</p>
+      <p>Your manager can help you set up a <strong>personal evacuation plan</strong>.</p>
+    `,
+    tts: "Extra support. If you would like extra support during an evacuation, please talk to your manager. Your manager can help you set up a personal evacuation plan."
+  }
     ],
     render: () => renderPointCarousel(1)
   },
 
   /* =================== PAGE 3 (Carousel-ready, unchanged content for now) =================== */
   {
-    kind: "text",
-    bg: PALETTE.teal,
-    tts: "Important to know. The red line shows a general path to the nearest stairwell. There are two emergency stairwells on our side. In a real emergency, follow the exit signs and instructions from fire wardens. The photos help you recognize the stairwell door.",
-    render: () => `
-      <section class="slide">
-        <div class="tts-topright">
-          <button type="button" class="tts-btn" data-tts="${escapeAttr(PAGES[2].tts)}">🔊 Read</button>
-          <button type="button" class="tts-btn" data-stop="1">⏹ Stop</button>
-        </div>
+    kind: "carousel",
+  bg: PALETTE.teal,
+  title: "Important to know",
 
-        <div class="slide-header">
-          
-          <h2 class="slide-title">Important to know</h2>
-        </div>
+  points: [
+     {
+      img: "assets/page3-0.png",
+      alt: "Two emergency stairwells",
+      html: `
+        <p>There are <strong>two emergency stairwells</strong> on our side.</p>
+      `,
+      tts: " There are two emergency stairwells on our side."
+    },
 
-        <div class="slide-body">
-          <ul>
-            <li>There are two emergency stairwells on our side.</li>
-            <li>
-              In a real emergency, follow the
-              <span class="tooltip tooltip-image">
-                <strong>EXIT</strong>
-                <span class="tooltip-box">
-                  <img src="assets/exit-logo.png" alt="Exit sign" class="tooltip-img">
-                  <span class="tooltip-caption">Exit sign</span>
-                </span>
-              </span>
-              signs and instructions from fire wardens.
-            </li>
-            <li>The photos help you recognise the stairwell door.</li>
-          </ul>
-        </div>
-      </section>
-    `
+    {
+      img: "assets/page3-1.jpg",
+      alt: "Stairwell near the lockers",
+      html: `
+        <p><strong>Stairwell near the lockers</strong></p>
+        <p>One emergency stairwell is located <strong>near the lockers</strong>.</p>
+      `,
+      tts: "Stairwell near the lockers. One emergency stairwell is located near the lockers."
+    },
+
+    {
+      img: "assets/page3-2.jpg",
+      alt: "Stairwell near the restrooms",
+      html: `
+        <p><strong>Stairwell near the restrooms</strong></p>
+        <p>Another emergency stairwell is located <strong>near the lifts</strong>.</p>
+      `,
+      tts: "Stairwell near the restrooms. Another emergency stairwell is located near the lifts."
+    }
+  ],
+
+  render: () => renderPointCarousel(2)
   },
 
   {
-    kind: "text",
-    bg: PALETTE.teal,
-    tts: "During the emergency. Stay calm. Walk. Do not run. Do not use the lift. Follow the exit signs and use the emergency stairwell.",
-    render: () => `
-      <section class="slide">
-        <div class="tts-topright">
-          <button type="button" class="tts-btn" data-tts="${escapeAttr(PAGES[3].tts)}">🔊 Read</button>
-          <button type="button" class="tts-btn" data-stop="1">⏹ Stop</button>
-        </div>
+    kind: "carousel",
+  bg: PALETTE.teal,
+  title: "During an emergency",
 
-        <div class="slide-header">
-          
-          <h2 class="slide-title">During the emergency</h2>
-        </div>
+  points: [
+    {
+      img: "assets/page4-1.png",
+      alt: "Stay calm",
+      html: `
+        <p><strong>Stay calm</strong></p>
+      `,
+      tts: "During an emergency. Stay calm."
+    },
 
-        <div class="slide-body">
-          <ul>
-            <li>Stay calm.</li>
-            <li>Walk. Do not run.</li>
-            <li><strong>Do not use the lift.</strong></li>
-            <li>Follow the EXIT signs and use the emergency stairwell.</li>
-          </ul>
-        </div>
-      </section>
-    `
+    {
+      img: "assets/page4-2.png",
+      alt: "Walk, do not run",
+      html: `
+        <p><strong>Walk.</strong> Do not run.</p>
+      `,
+      tts: "Walk. Do not run."
+    },
+
+    {
+      img: "assets/page4-3.png",
+      alt: "Do not use the lift",
+      html: `
+        <p><strong>Do not use the lift.</strong></p>
+      `,
+      tts: "Do not use the lift."
+    },
+
+    {
+      img: "assets/page4-4.png",
+      alt: "Use the emergency stairwell",
+      html: `
+        <p>Use the <strong>emergency stairwell</strong>.</p>
+      `,
+      tts: "Use the emergency stairwell."
+    }
+  ],
+
+  render: () => renderPointCarousel(3)
   },
 
   {
@@ -321,7 +350,7 @@ const PAGES = [
 
         <div class="slide-header">
           
-          <h2 class="slide-title">Through kitchen</h2>
+          <h2 class="slide-title"> Go through the kitchen</h2>
         </div>
 
         <div class="slide-media">
@@ -344,7 +373,7 @@ const PAGES = [
 
         <div class="slide-header">
           
-          <h2 class="slide-title">Emergency exit</h2>
+          <h2 class="slide-title">The emergency exit is here</h2>
         </div>
 
         <div class="slide-media">
@@ -357,7 +386,7 @@ const PAGES = [
   {
     kind: "map",
     bg: PALETTE.pink,
-    tts: "This is what the exit door looks like. Follow the exit sign and use this door.",
+    tts: "Stairwell near the lifts. This is the door to the emergency stairwell. Follow the exit sign and use this door.",
     render: () => `
       <section class="slide">
         <div class="tts-topright">
@@ -367,7 +396,7 @@ const PAGES = [
 
         <div class="slide-header">
           
-          <h2 class="slide-title">Exit door</h2>
+          <h2 class="slide-title">Stairwell near the lifts</h2>
         </div>
 
         <div class="slide-media">
@@ -375,8 +404,8 @@ const PAGES = [
         </div>
 
         <p class="caption">
-          This is what the exit door looks like.<br>
-          Follow the EXIT sign and use this door.
+          This is the door to the emergency stairwell.<br>
+          Follow the <strong>EXIT</strong> sign and use this door.
         </p>
       </section>
     `
@@ -385,7 +414,7 @@ const PAGES = [
   {
     kind: "map",
     bg: PALETTE.pink,
-    tts: "There is another emergency exit near the locker area. You can use this exit if you are closer to it. Follow the exit signs.",
+    tts: "Another emergency exit. There is another emergency exit near the locker area. Use this exit if you are closer to it.",
     render: () => `
       <section class="slide">
         <div class="tts-topright">
@@ -413,7 +442,7 @@ const PAGES = [
   {
     kind: "map",
     bg: PALETTE.pink,
-    tts: "This is what the second exit door looks like. Follow the exit sign and use this door if it is closer to you.",
+    tts: "Stairwell near the lockers. This is what the second exit door looks like. Follow the exit sign and use this door if it is closer to you.",
     render: () => `
       <section class="slide">
         <div class="tts-topright">
@@ -423,7 +452,7 @@ const PAGES = [
 
         <div class="slide-header">
           
-          <h2 class="slide-title">Second exit door</h2>
+          <h2 class="slide-title">Stairwell near the lockers</h2>
         </div>
 
         <div class="slide-media">
@@ -437,6 +466,35 @@ const PAGES = [
       </section>
     `
   },
+   {
+  kind: "map",
+  bg: PALETTE.pink,
+  tts: "This is our assembly area. After leaving the building, go to the writtle park.",
+
+  render: () => `
+    <section class="slide">
+
+      <div class="tts-topright">
+        <button type="button" class="tts-btn" data-tts="${escapeAttr(PAGES[10].tts)}">🔊 Read</button>
+        <button type="button" class="tts-btn" data-stop="1">⏹ Stop</button>
+      </div>
+
+      <div class="slide-header">
+        <h2 class="slide-title">This is our Assembly area</h2>
+      </div>
+
+      <div class="slide-media">
+        <img src="assets/meeting.jpg" alt="Assembly area meeting point" />
+      </div>
+
+      <p class="caption">
+        After leaving the building,<br>
+        go to the <strong>writtle park</strong>.
+      </p>
+
+    </section>
+  `
+},
 
   {
     kind: "end",
@@ -467,6 +525,8 @@ const PAGES = [
       </section>
     `
   }
+ 
+  
 ];
 
 /* Wire TTS buttons inside a container */

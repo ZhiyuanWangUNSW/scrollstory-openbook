@@ -30,6 +30,46 @@ body{
   background: var(--bg, var(--navy));
 }
 
+.top-illustration{
+  width:100%;
+  max-height:180px;
+  object-fit:contain;
+  margin-bottom:20px;
+}
+
+.point-box{
+  background:#f5f7fb;
+  border-radius:12px;
+  padding:22px;
+  font-size:22px;
+  line-height:1.6;
+  margin-top:14px;
+}
+
+.point-nav{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap:15px;
+  margin-top:14px;
+}
+
+.point-arrow{
+  border:none;
+  background:#e6e6e6;
+  width:36px;
+  height:36px;
+  border-radius:50%;
+  font-size:20px;
+  cursor:pointer;
+}
+
+.point-counter{
+  font-size:14px;
+  opacity:0.7;
+}
+
+
 /* Center white card */
 .card{
   width: min(980px, 96vw);
@@ -53,21 +93,21 @@ body{
 /* Header + typography */
 .slide-header{ padding-right: 132px; }
 .slide-kicker{
-  font-size: 14px;
+  font-size: 18px;
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--muted);
   margin: 0 0 8px 0;
 }
 .slide-title{
-  font-size: 34px;
+  font-size: 44px;
   line-height: 1.15;
   margin: 0 0 14px 0;
   color: var(--text);
   font-weight: 750;
 }
 .slide-body{
-  font-size: 18px;
+  font-size: 30px;
   line-height: 1.55;
   color: var(--text);
 }
@@ -87,8 +127,10 @@ body{
 }
 .slide-media img{
   display:block;
-  width:100%;
+  width:75%;
+  max-width:650px;
   height:auto;
+  margin:0 auto;
 }
 
 /* Caption text */
@@ -307,3 +349,20 @@ body{
   color: #fff;
 }
 .continue:disabled{ opacity: 0.45; cursor: not-allowed; }
+
+/* Point carousel dots (inside Page 2/3/4 cards) */
+.point-dots{
+  display:flex;
+  justify-content:center;
+  gap:10px;
+  margin-top: 12px;
+}
+.point-dots .dot{
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+  border: 0;
+  cursor: pointer;
+  background: rgba(0,0,0,0.25);
+}
+.point-dots .dot.is-active{ background: rgba(0,0,0,0.75); }

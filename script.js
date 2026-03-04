@@ -4,7 +4,9 @@ function speak(text) {
   window.speechSynthesis.cancel();
   const u = new SpeechSynthesisUtterance(text);
   u.lang = "en-AU";
-  window.speechSynthesis.speak(u);
+  u.rate = 0.9;
+  setTimeout(() => {
+  window.speechSynthesis.speak(u);},120);
 }
 function stopSpeech() {
   window.speechSynthesis.cancel();
@@ -20,12 +22,124 @@ function escapeAttr(s) {
     .replaceAll(">", "&gt;");
 }
 
+/* escape for putting text into HTML */
+function escapeHtml(s) {
+  return String(s)
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#39;");
+}
+
 /* ============ Palette (from your current app) ============ */
 const PALETTE = {
   navy: "#2d3f2e",
   teal: "#6c7659",
   pink: "#d6d1c7",
 };
+
+/* ============ Reusable: carousel page renderer ============ */
+function renderPointCarousel(pageIndex) {
+  const p = PAGES[pageIndex];
+  const title = escapeHtml(p.title || "");
+
+
+  // We keep the Read/Stop buttons in the same style/position as other pages.
+  // The Read button uses data-tts, which we update as the point changes.
+  return `
+    <section class="slide" data-carousel="1">
+      <div class="tts-topright">
+        <button type="button" class="tts-btn" data-tts="">🔊 Read</button>
+        <button type="button" class="tts-btn" data-stop="1">⏹ Stop</button>
+      </div>
+
+      <div class="slide-header">
+        <h2 class="slide-title">${title}</h2>
+      </div>
+
+      <div class="slide-media">
+        <img data-carousel-img src="" alt="" />
+      </div>
+
+      <div class="point-box" data-carousel-text></div>
+
+      <div class="point-nav" aria-label="Point navigation">
+        <button class="point-arrow" type="button" data-carousel-prev aria-label="Previous point">◀</button>
+        <span class="point-counter" data-carousel-counter></span>
+        <button class="point-arrow" type="button" data-carousel-next aria-label="Next point">▶</button>
+      </div>
+
+      <div class="point-dots" data-carousel-dots aria-label="Point progress"></div>
+    </section>
+  `;
+}
+
+/* ============ Reusable: carousel logic (Page 2/3/4) ============ */
+function initPointCarousel(root, page) {
+  if (!page || page.kind !== "carousel") return;
+
+  const imgEl = root.querySelector("[data-carousel-img]");
+  const textEl = root.querySelector("[data-carousel-text]");
+  const counterEl = root.querySelector("[data-carousel-counter]");
+  const dotsEl = root.querySelector("[data-carousel-dots]");
+
+  const readBtn = root.querySelector(".tts-btn[data-tts]");
+
+  let idx = 0;
+
+  function renderDots() {
+    if (!dotsEl) return;
+    dotsEl.innerHTML = page.points
+      .map((_, i) => `
+        <button
+          type="button"
+          class="dot ${i === idx ? "is-active" : ""}"
+          aria-label="Go to point ${i + 1}"
+          data-carousel-go="${i}"
+        ></button>
+      `)
+      .join("");
+
+    dotsEl.querySelectorAll("[data-carousel-go]").forEach(b => {
+      b.addEventListener("click", () => {
+        stopSpeech();
+        idx = Number(b.dataset.carouselGo);
+        renderPoint();
+      });
+    });
+  }
+
+  function renderPoint() {
+    const pt = page.points[idx];
+
+    if (imgEl) {
+      imgEl.src = pt.img || "";
+      imgEl.alt = pt.alt || "";
+    }
+    if (textEl) textEl.innerHTML = pt.html || "";
+    if (counterEl) counterEl.textContent = `${idx + 1} / ${page.points.length}`;
+
+    // Update what the existing wireTTS handler will read
+    if (readBtn) readBtn.setAttribute("data-tts", page.title + ". " + (pt.tts || ""));
+
+    renderDots();
+  }
+
+  root.querySelector("[data-carousel-prev]")?.addEventListener("click", () => {
+    stopSpeech();
+    idx = (idx - 1 + page.points.length) % page.points.length;
+    renderPoint();
+  });
+
+  root.querySelector("[data-carousel-next]")?.addEventListener("click", () => {
+    stopSpeech();
+    idx = (idx + 1) % page.points.length;
+    renderPoint();
+  });
+
+  renderPoint();
+}
 
 /* ============ Pages (NSW-style: solid bg + white card) ============ */
 const PAGES = [
@@ -35,70 +149,77 @@ const PAGES = [
     tts: "Emergency Exit Plan. Health Translation Hub. Level 6. North.",
     render: () => `
       <section class="slide cover-slide">
-    <div class="tts-topright">
-      <button type="button" class="tts-btn" data-tts="${escapeAttr(PAGES[0].tts)}">🔊 Read</button>
-      <button type="button" class="tts-btn" data-stop="1">⏹ Stop</button>
-    </div>
-
-    <div class="cover-grid">
-
-      <div class="cover-hero" aria-hidden="true">
-        <img class="cover-hero-img" src="assets/cover-bg.png" alt="Cover image" />
-
-        <div class="cover-overlay">
-          <h1 class="cover-overlay-title">Emergency Exit Plan</h1>
-          <div class="cover-overlay-sub">
-            Health Translation Hub<br>
-            Level 6<br>
-            North
-          </div>
-        </div>
-
-        <img class="cover-logo" src="assets/logo.png" alt="Logo" />
-      </div>
-
-    </div>
-  </section>
-  `
-  },
-
-  {
-    kind: "text",
-    bg: PALETTE.teal,
-    tts: "What is this. This map shows where the emergency stairwells are located. It helps you understand how to leave our office area safely. If you would like extra support during an evacuation, please talk to your manager about setting up a buddy plan.",
-    render: () => `
-      <section class="slide">
         <div class="tts-topright">
-          <button type="button" class="tts-btn" data-tts="${escapeAttr(PAGES[1].tts)}">🔊 Read</button>
+          <button type="button" class="tts-btn" data-tts="${escapeAttr(PAGES[0].tts)}">🔊 Read</button>
           <button type="button" class="tts-btn" data-stop="1">⏹ Stop</button>
         </div>
 
-        <div class="slide-header">
-          <p class="slide-kicker">Emergency exit</p>
-          <h2 class="slide-title">What is this</h2>
-        </div>
+        <div class="cover-grid">
+          <div class="cover-hero" aria-hidden="true">
+            <img class="cover-hero-img" src="assets/cover-bg.png" alt="Cover image" />
 
-        <div class="slide-body">
-          <ul>
-            <li>
-              This map shows where the
-              <span class="tooltip">
-                emergency stairwells
-                <span class="tooltip-box">
-                  Emergency stairwells are protected stairs used to leave the building safely during an emergency.
-                </span>
-              </span>
-              are located.
-            </li>
-            <li>It helps you understand how to leave our office area safely.</li>
-            <li>If you would like extra support during an evacuation, 
-            please talk to your manager.</li>
-          </ul>
+            <div class="cover-overlay">
+              <h1 class="cover-overlay-title">Emergency Exit Plan</h1>
+              <div class="cover-overlay-sub">
+                Health Translation Hub<br>
+                Level 6<br>
+                North
+              </div>
+            </div>
+
+            <img class="cover-logo" src="assets/logo.png" alt="Logo" />
+          </div>
         </div>
       </section>
     `
   },
 
+  /* =================== PAGE 2 (Carousel) =================== */
+  {
+    kind: "carousel",
+    bg: PALETTE.teal,
+    title: "What is this",
+    points: [
+      {
+        img: "assets/page2-1.png",
+        alt: "Emergency stairwells overview",
+        html: `
+          <p><strong>This plan shows where the emergency stairwells are located.</strong></p>
+          <p>
+            <span class="tooltip">
+              Emergency stairwells
+              <span class="tooltip-box">
+                Emergency stairwells are protected stairs used to leave the building safely during an emergency.
+              </span>
+            </span>
+            help people leave the building safely during an emergency.
+          </p>
+        `,
+        tts: "This map shows where the emergency stairwells are located. Emergency stairwells are protected stairs used to leave the building safely during an emergency."
+      },
+      {
+        img: "assets/page2-2.png",
+        alt: "Leaving our office area",
+        html: `
+          <p><strong>It helps you understand how to leave our office area safely.</strong></p>
+          <p>In a real emergency, follow the EXIT signs and instructions from fire wardens.</p>
+        `,
+        tts: "It helps you understand how to leave our office area safely. In a real emergency, follow the exit signs and instructions from fire wardens."
+      },
+      {
+        img: "assets/page2-3.png",
+        alt: "Buddy plan",
+        html: `
+          <p><strong>If you would like extra support during an evacuation, please talk to your manager.</strong></p>
+          <p>Your manager can help you set up a personal evacuation plan.</p>
+        `,
+        tts: "If you would like extra support during an evacuation, please talk to your manager. Your manager can help you set up a personal evacuation plan."
+      }
+    ],
+    render: () => renderPointCarousel(1)
+  },
+
+  /* =================== PAGE 3 (Carousel-ready, unchanged content for now) =================== */
   {
     kind: "text",
     bg: PALETTE.teal,
@@ -111,7 +232,7 @@ const PAGES = [
         </div>
 
         <div class="slide-header">
-          <p class="slide-kicker">Emergency exit</p>
+          
           <h2 class="slide-title">Important to know</h2>
         </div>
 
@@ -148,7 +269,7 @@ const PAGES = [
         </div>
 
         <div class="slide-header">
-          <p class="slide-kicker">Emergency exit</p>
+          
           <h2 class="slide-title">During the emergency</h2>
         </div>
 
@@ -176,7 +297,7 @@ const PAGES = [
         </div>
 
         <div class="slide-header">
-          <p class="slide-kicker">Emergency exit</p>
+          
           <h2 class="slide-title">Here is our area</h2>
         </div>
 
@@ -199,7 +320,7 @@ const PAGES = [
         </div>
 
         <div class="slide-header">
-          <p class="slide-kicker">Emergency exit</p>
+          
           <h2 class="slide-title">Through kitchen</h2>
         </div>
 
@@ -222,7 +343,7 @@ const PAGES = [
         </div>
 
         <div class="slide-header">
-          <p class="slide-kicker">Emergency exit</p>
+          
           <h2 class="slide-title">Emergency exit</h2>
         </div>
 
@@ -245,7 +366,7 @@ const PAGES = [
         </div>
 
         <div class="slide-header">
-          <p class="slide-kicker">Emergency exit</p>
+          
           <h2 class="slide-title">Exit door</h2>
         </div>
 
@@ -273,7 +394,7 @@ const PAGES = [
         </div>
 
         <div class="slide-header">
-          <p class="slide-kicker">Emergency exit</p>
+          
           <h2 class="slide-title">Another emergency exit</h2>
         </div>
 
@@ -283,7 +404,7 @@ const PAGES = [
 
         <p class="caption">
           There is another emergency exit near the locker area.<br>
-          Use this exit if you are closer to it.
+          Use this exit if you are closer to you.
         </p>
       </section>
     `
@@ -301,7 +422,7 @@ const PAGES = [
         </div>
 
         <div class="slide-header">
-          <p class="slide-kicker">Emergency exit</p>
+          
           <h2 class="slide-title">Second exit door</h2>
         </div>
 
@@ -320,20 +441,18 @@ const PAGES = [
   {
     kind: "end",
     bg: PALETTE.navy,
-    tts: "You are ready. You now know where the emergency exits are and how to leave safely.",
+    tts: "You re ready. You now know where the emergency exits are and how to leave safely.",
     render: () => `
-          <section class="slide cover-slide">
-    
+      <section class="slide cover-slide">
         <div class="tts-topright">
           <button type="button" class="tts-btn" data-tts="${escapeAttr(PAGES[10].tts)}">🔊 Read</button>
           <button type="button" class="tts-btn" data-stop="1">⏹ Stop</button>
         </div>
-    
+
         <div class="cover-grid">
-    
           <div class="cover-hero">
             <img class="cover-hero-img" src="assets/cover-bg.png" alt="Background image" />
-    
+
             <div class="cover-overlay">
               <h2 class="cover-overlay-title">You’re ready</h2>
               <div class="cover-overlay-sub">
@@ -341,10 +460,9 @@ const PAGES = [
                 and how to leave safely.
               </div>
             </div>
-    
+
             <img class="cover-logo" src="assets/logo.png" alt="Logo" />
           </div>
-    
         </div>
       </section>
     `
@@ -406,11 +524,19 @@ function render() {
     </div>
   `;
 
+  // 1) bind TTS buttons
   wireTTS(app);
 
+  // 2) bind main navigation
   app.querySelectorAll("[data-go]").forEach(b => b.addEventListener("click", () => goTo(Number(b.dataset.go))));
   app.querySelectorAll("[data-prev]").forEach(b => b.addEventListener("click", () => goTo(current - 1)));
   app.querySelectorAll("[data-next]").forEach(b => b.addEventListener("click", () => goTo(current + 1)));
+
+  // 3) init carousel pages (Page 2 / 3 / 4 later)
+  if (page.kind === "carousel") {
+    const slideRoot = app.querySelector("[data-carousel]");
+    initPointCarousel(slideRoot || app, page);
+  }
 }
 
 /* Keyboard nav: left/right arrows */

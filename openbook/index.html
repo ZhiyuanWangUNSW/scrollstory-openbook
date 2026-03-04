@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Emergency Exit Plan</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+<main class="layout">
+
+  <!-- Sticky "BOOK spread" viewport -->
+  <section class="stage" aria-label="Sticky book">
+    <div class="book" id="pdf" aria-live="polite">
+      <!-- JS renders the 2-page spread here -->
+    </div>
+  </section>
+
+  <!-- Scroll steps (driver) -->
+  <section class="scrolly" aria-label="Scroll steps">
+    <div class="spacer"></div>
+
+    <article class="steps">
+      <section class="step" data-step="0"></section>
+      <section class="step" data-step="1"></section>
+      <section class="step" data-step="2"></section>
+      <section class="step" data-step="3"></section>
+      <section class="step" data-step="4"></section>
+      <section class="step" data-step="5"></section>
+      <section class="step" data-step="6"></section>
+      <section class="step" data-step="7"></section>
+      <section class="step" data-step="8"></section>
+      <section class="step" data-step="9"></section>
+      <section class="step" data-step="10"></section>
+    </article>
+
+    <div class="spacer"></div>
+  </section>
+
+</main>
+
+<script src="https://unpkg.com/scrollama"></script>
+<script src="script.js"></script>
+</body>
+</html>

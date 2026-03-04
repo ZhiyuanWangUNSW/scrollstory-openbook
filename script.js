@@ -280,7 +280,7 @@ const PAGES = [
       html: `
         <p><strong>Stay calm</strong></p>
       `,
-      tts: "During an emergency. Stay calm."
+      tts: " Stay calm."
     },
 
     {
@@ -442,7 +442,7 @@ const PAGES = [
   {
     kind: "map",
     bg: PALETTE.pink,
-    tts: "Stairwell near the lockers. This is what the second exit door looks like. Follow the exit sign and use this door if it is closer to you.",
+    tts: "Stairwell near the lockers. This is what the second exit door looks like. Use this exit if it is closer to you.",
     render: () => `
       <section class="slide">
         <div class="tts-topright">
@@ -499,11 +499,11 @@ const PAGES = [
   {
     kind: "end",
     bg: PALETTE.navy,
-    tts: "You re ready. You now know where the emergency exits are and how to leave safely.",
+    tts: "You re ready. You now know where the emergency exits are. and how to leave safely.",
     render: () => `
       <section class="slide cover-slide">
         <div class="tts-topright">
-          <button type="button" class="tts-btn" data-tts="${escapeAttr(PAGES[10].tts)}">🔊 Read</button>
+          <button type="button" class="tts-btn" data-tts="${escapeAttr(PAGES[11].tts)}">🔊 Read</button>
           <button type="button" class="tts-btn" data-stop="1">⏹ Stop</button>
         </div>
 

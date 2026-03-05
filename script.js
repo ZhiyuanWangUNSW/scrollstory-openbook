@@ -296,7 +296,7 @@ const PAGES = [
       img: "assets/page4-3.png",
       alt: "Do not use lifts",
       html: `
-        <p><strong>Do not use the lift.</strong></p>
+        <p><strong>Do not use lifts.</strong></p>
       `,
       tts: "Do not use lifts."
     },

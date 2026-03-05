@@ -44,6 +44,7 @@ body{
   font-size:22px;
   line-height:1.6;
   margin-top:14px;
+  text-align: center;
 }
 
 .point-nav{
@@ -137,7 +138,7 @@ body{
 .caption{
   max-width: 760px;
   margin: 24px auto 0;
-  font-size: 20px;
+  font-size: 22px;
   line-height: 1.6;
   color: #2b2b2b;
   text-align: center;
@@ -157,7 +158,8 @@ body{
 .cover-hero-img{
   display:block;
   width:100%;
-  height:auto;
+  max-height:95vh;
+  object-fit:cover;
 }
 
 .cover-overlay{
@@ -264,7 +266,7 @@ body{
   border-radius:10px;
   font-size:16px;
   line-height:1.35;
-  text-align:left;
+  text-align:center;
   opacity:0;
   pointer-events:none;
   transition:opacity 0.18s ease;

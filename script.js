@@ -207,11 +207,11 @@ const PAGES = [
     img: "assets/page2-3.png",
     alt: "Fire warden",
     html: `
-      <p><strong>Fire wardens</strong></p>
+      <p><strong>Fire warden</strong></p>
       <p>Listen to instructions from the <strong>fire warden</strong>.</p>
       <p>A fire warden is the person who helps everyone evacuate safely.</p>
     `,
-    tts: "Fire wardens. Listen to instructions from the fire warden. A fire warden is the person who helps everyone evacuate safely."
+    tts: "Fire warden. Listen to instructions from the fire warden. A fire warden is the person who helps everyone evacuate safely."
   },
 
   {
@@ -294,11 +294,11 @@ const PAGES = [
 
     {
       img: "assets/page4-3.png",
-      alt: "Do not use the lift",
+      alt: "Do not use lifts",
       html: `
         <p><strong>Do not use the lift.</strong></p>
       `,
-      tts: "Do not use the lift."
+      tts: "Do not use lifts."
     },
 
     {
@@ -433,7 +433,7 @@ const PAGES = [
 
         <p class="caption">
           There is another emergency exit near the locker area.<br>
-          Use this exit if you are closer to you.
+          Use this exit if you are closer to it.
         </p>
       </section>
     `
@@ -469,7 +469,7 @@ const PAGES = [
    {
   kind: "map",
   bg: PALETTE.pink,
-  tts: "This is our assembly area. After leaving the building, go to the writtle park.",
+  tts: "This is our assembly area. After leaving the building, go to the writtle park. The assembly area is the place where everyone gathers after leaving the building. ",
 
   render: () => `
     <section class="slide">
@@ -488,8 +488,9 @@ const PAGES = [
       </div>
 
       <p class="caption">
-        After leaving the building,<br>
-        go to the <strong>writtle park</strong>.
+        After leaving the building,
+        go to the <strong>writtle park</strong>.<br>
+        The <strong>assembly area</strong> is the place where everyone gathers after leaving the building.
       </p>
 
     </section>
@@ -499,7 +500,7 @@ const PAGES = [
   {
     kind: "end",
     bg: PALETTE.navy,
-    tts: "You re ready. You now know where the emergency exits are. and how to leave safely.",
+    tts: "You are ready. You now know where the emergency exits are. and how to leave safely.",
     render: () => `
       <section class="slide cover-slide">
         <div class="tts-topright">
@@ -512,7 +513,7 @@ const PAGES = [
             <img class="cover-hero-img" src="assets/cover-bg.png" alt="Background image" />
 
             <div class="cover-overlay">
-              <h2 class="cover-overlay-title">You’re ready</h2>
+              <h2 class="cover-overlay-title">You are ready</h2>
               <div class="cover-overlay-sub">
                 You now know where the emergency exits are<br>
                 and how to leave safely.

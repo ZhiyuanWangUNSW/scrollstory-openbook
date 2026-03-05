@@ -146,7 +146,7 @@ const PAGES = [
   {
     kind: "cover",
     bg: PALETTE.navy,
-    tts: "Emergency Exit Plan. Health Translation Hub. Level 6. North.",
+    tts: "Emergency Evacuation Guide. Health Translation Hub. Level 6. North.",
     render: () => `
       <section class="slide cover-slide">
         <div class="tts-topright">
@@ -159,7 +159,7 @@ const PAGES = [
             <img class="cover-hero-img" src="assets/cover-bg.png" alt="Cover image" />
 
             <div class="cover-overlay">
-              <h1 class="cover-overlay-title">Emergency Exit Plan</h1>
+              <h1 class="cover-overlay-title">Emergency Evacuation Guide</h1>
               <div class="cover-overlay-sub">
                 Health Translation Hub<br>
                 Level 6<br>
